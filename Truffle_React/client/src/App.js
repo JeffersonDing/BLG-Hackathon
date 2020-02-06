@@ -26,12 +26,12 @@ this.web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"))
 if (this.web3.isConnected()) {
   this.web3.version.getNetwork(async (err, netId) => {
 
-    if (netId in tokenArtifacts.networks) {
-   const tokenAddress = tokenArtifacts.networks[netId].address
-   console.log(tokenAddress)
-   const token = this.web3.eth.contract(tokenArtifacts.abi).at(tokenAddress)
-   this.setState({token})
-   console.log(token)
+  if (netId in tokenArtifacts.networks) {
+  const tokenAddress = tokenArtifacts.networks[netId].address
+  console.log(tokenAddress)
+  const token = this.web3.eth.contract(tokenArtifacts.abi).at(tokenAddress)
+  this.setState({token})
+  console.log(token)
 
  }
   })
