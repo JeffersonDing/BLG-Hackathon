@@ -32,3 +32,6 @@ contract MetaCoin {
 		return balances[addr];
 	}
 }
+
+
+
