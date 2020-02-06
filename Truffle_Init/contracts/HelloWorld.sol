@@ -1,4 +1,4 @@
-pragma solidity^0.4.24
+pragma solidity^0.4.24;
 contract HelloWorld{
 	string private name;
 
@@ -9,7 +9,7 @@ contract HelloWorld{
 		return name;
 	}
 	function setName(string _name)public{
-		name=_name
+		name=_name;
 	}
 
 }
