@@ -26,12 +26,13 @@ class App extends Component {
       tokenBalance:0,
       ethBalance:0,
       amount:0,
-
+      transferAmount: 0,
+      transferUser: '',
     }
   }
 
 componentDidMount() {
-this.web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:7545"))
+this.web3 = new Web3(new Web3.providers.WebsocketProvider("ws://localhost:7545"))
 if (this.web3.eth.net.isListening()) {
   this.web3.eth.getAccounts().then(accounts=>{
     const defaultAccount = accounts[0]
@@ -85,23 +86,11 @@ this.web3.eth.getBalance(account,(err,ethbalance)=>{
   // Create listeners for all events.
   loadEventListeners() {
     console.log("EventListener ready")
-    this.state.token.events.Transfer ({
-  fromBlock: 'latest',
-  toBlock: 'latest'
-}, function(error, result) {
-  if (!error) {
-    console.log(result);
-  } else {
-    console.log(error);
-  }
+    this.state.token.events.Transfer ({fromBlock: 'latest',toBlock: 'latest'}, (error, result)=> {
+  this.web3.eth.getAccounts().then(accounts=>{
+     this.loadAccountBalances(accounts[this.state.defaultAccount])
+  })
 });
-    //this.state.token.getPastEvents('Transfer',{fromBlock:0},(err,events)=>{console.log(events)})
-  //  this.state.token.events.Transfer({fromBlock:0}).on('data',(err,events)=>{console.log(events)})
-//  this.web3.eth.getAccounts().then(accounts=>{
-    //console.log(accounts[this.state.defaultAccount])
-    //this.loadAccountBalances(accounts[this.state.defaultAccount])
-//  })
-
   }
 
   // Buy new tokens with eth
@@ -119,9 +108,14 @@ this.web3.eth.getBalance(account,(err,ethbalance)=>{
 
   // Transfer tokens to a user
   transfer(user, amount) {
-
-
-  }
+    if (amount > 0) {
+      this.web3.eth.getAccounts().then(accounts=>{
+      this.state.token.methods.transfer(user, amount).send({from: accounts[this.state.defaultAccount]}, (err, res) => {
+        err ? console.error(err) : console.log(res)
+      })
+})
+}
+}
 
   // When a new account in selected in the available accounts drop down.
   handleDropDownChange = (event, index, defaultAccount) => {
@@ -152,7 +146,18 @@ this.web3.eth.getBalance(account,(err,ethbalance)=>{
         />
       </div>
       <br />
-
+        <div>
+          <h3>Transfer Tokens</h3>
+          <TextField floatingLabelText="User to transfer tokens to." style={{width: 400}} value={this.state.transferUser}
+            onChange={(e, transferUser) => { this.setState({ transferUser }) }}
+          />
+          <TextField floatingLabelText="Amount." style={{width: 100}} value={this.state.transferAmount}
+            onChange={(e, transferAmount) => { this.setState({ transferAmount })}}
+          />
+          <RaisedButton label="Transfer" labelPosition="before" primary={true}
+           onClick={() => this.transfer(this.state.transferUser, this.state.transferAmount)}
+          />
+        </div>
     </div>
 
     return (
