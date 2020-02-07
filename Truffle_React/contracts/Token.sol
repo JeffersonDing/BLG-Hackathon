@@ -36,7 +36,7 @@ contract Token {
   }
 
   // Buy tokens with ether, mint and allocate new tokens to the purchaser.
-  function buy() external payable returns (bool)
+  function buy() external payable returns (string)
   {
     require(msg.value > 0, 'Cannot buy with a value of <= 0, Token.buy()');
 
@@ -48,7 +48,7 @@ contract Token {
     emit TokensMinted(msg.sender, msg.value, totalSupply_);
     emit Transfer(address(0), msg.sender, msg.value);
 
-    return true;
+    return "done";
   }
 
   // Transfer value to another address
