@@ -30,15 +30,15 @@
       "type": "function"
     }
   ],
-  "metadata": "{\"compiler\":{\"version\":\"0.4.24+commit.e67f0147\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"constant\":false,\"inputs\":[{\"name\":\"x\",\"type\":\"uint256\"}],\"name\":\"set\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"get\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/Users/jefferson.ding/Desktop/DiaMonde/contracts/SimpleStorage.sol\":\"SimpleStorage\"},\"evmVersion\":\"byzantium\",\"libraries\":{},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/Users/jefferson.ding/Desktop/DiaMonde/contracts/SimpleStorage.sol\":{\"keccak256\":\"0xc2159b9be968451f2fc7620e38577dd35ed99a13286085d788139b7ce1ce3fc1\",\"urls\":[\"bzzr://add1d88327f5ae0d3f9f83570c748f60aac9b8e3ca394f3ff48193e80d1ab361\"]}},\"version\":1}",
-  "bytecode": "0x608060405234801561001057600080fd5b5060df8061001f6000396000f3006080604052600436106049576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff16806360fe47b114604e5780636d4ce63c146078575b600080fd5b348015605957600080fd5b5060766004803603810190808035906020019092919050505060a0565b005b348015608357600080fd5b50608a60aa565b6040518082815260200191505060405180910390f35b8060008190555050565b600080549050905600a165627a7a72305820119606204d86cafc7a2aa827abcba28f09370c29240a8131174471ccceeabb660029",
-  "deployedBytecode": "0x6080604052600436106049576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff16806360fe47b114604e5780636d4ce63c146078575b600080fd5b348015605957600080fd5b5060766004803603810190808035906020019092919050505060a0565b005b348015608357600080fd5b50608a60aa565b6040518082815260200191505060405180910390f35b8060008190555050565b600080549050905600a165627a7a72305820119606204d86cafc7a2aa827abcba28f09370c29240a8131174471ccceeabb660029",
+  "metadata": "{\"compiler\":{\"version\":\"0.4.24+commit.e67f0147\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"constant\":false,\"inputs\":[{\"name\":\"x\",\"type\":\"uint256\"}],\"name\":\"set\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"get\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/Users/jefferson.ding/Desktop/Git Repo/BLG-Hackathon/DiaMonde/contracts/SimpleStorage.sol\":\"SimpleStorage\"},\"evmVersion\":\"byzantium\",\"libraries\":{},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/Users/jefferson.ding/Desktop/Git Repo/BLG-Hackathon/DiaMonde/contracts/SimpleStorage.sol\":{\"keccak256\":\"0xc2159b9be968451f2fc7620e38577dd35ed99a13286085d788139b7ce1ce3fc1\",\"urls\":[\"bzzr://add1d88327f5ae0d3f9f83570c748f60aac9b8e3ca394f3ff48193e80d1ab361\"]}},\"version\":1}",
+  "bytecode": "0x608060405234801561001057600080fd5b5060df8061001f6000396000f3006080604052600436106049576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff16806360fe47b114604e5780636d4ce63c146078575b600080fd5b348015605957600080fd5b5060766004803603810190808035906020019092919050505060a0565b005b348015608357600080fd5b50608a60aa565b6040518082815260200191505060405180910390f35b8060008190555050565b600080549050905600a165627a7a72305820b86c7d7362a8f8a008c1bb8a52751b29b34151ed5bf2a3074816e08ce46a9c300029",
+  "deployedBytecode": "0x6080604052600436106049576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff16806360fe47b114604e5780636d4ce63c146078575b600080fd5b348015605957600080fd5b5060766004803603810190808035906020019092919050505060a0565b005b348015608357600080fd5b50608a60aa565b6040518082815260200191505060405180910390f35b8060008190555050565b600080549050905600a165627a7a72305820b86c7d7362a8f8a008c1bb8a52751b29b34151ed5bf2a3074816e08ce46a9c300029",
   "sourceMap": "34:176:2:-;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;34:176:2;;;;;;;",
   "deployedSourceMap": "34:176:2:-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;81:53;;8:9:-1;5:2;;;30:1;27;20:12;5:2;81:53:2;;;;;;;;;;;;;;;;;;;;;;;;;;138:70;;8:9:-1;5:2;;;30:1;27;20:12;5:2;138:70:2;;;;;;;;;;;;;;;;;;;;;;;81:53;128:1;115:10;:14;;;;81:53;:::o;138:70::-;174:4;193:10;;186:17;;138:70;:::o",
   "source": "pragma solidity >=0.4.21 <0.7.0;\n\ncontract SimpleStorage {\n  uint storedData;\n\n  function set(uint x) public {\n    storedData = x;\n  }\n\n  function get() public view returns (uint) {\n    return storedData;\n  }\n}\n",
-  "sourcePath": "/Users/jefferson.ding/Desktop/DiaMonde/contracts/SimpleStorage.sol",
+  "sourcePath": "/Users/jefferson.ding/Desktop/Git Repo/BLG-Hackathon/DiaMonde/contracts/SimpleStorage.sol",
   "ast": {
-    "absolutePath": "/Users/jefferson.ding/Desktop/DiaMonde/contracts/SimpleStorage.sol",
+    "absolutePath": "/Users/jefferson.ding/Desktop/Git Repo/BLG-Hackathon/DiaMonde/contracts/SimpleStorage.sol",
     "exportedSymbols": {
       "SimpleStorage": [
         491
@@ -297,7 +297,7 @@
     "src": "0:211:2"
   },
   "legacyAST": {
-    "absolutePath": "/Users/jefferson.ding/Desktop/DiaMonde/contracts/SimpleStorage.sol",
+    "absolutePath": "/Users/jefferson.ding/Desktop/Git Repo/BLG-Hackathon/DiaMonde/contracts/SimpleStorage.sol",
     "exportedSymbols": {
       "SimpleStorage": [
         491
@@ -559,9 +559,17 @@
     "name": "solc",
     "version": "0.4.24+commit.e67f0147.Emscripten.clang"
   },
-  "networks": {},
+  "networks": {
+    "5777": {
+      "events": {},
+      "links": {},
+      "address": "0xb7414F4Ae685eF96ACC19f844864d91F54e624fF",
+      "transactionHash": "0xa2dcb1188b9eb5d4d158e1c4b101790654ad5f04981f28047140bece4655768e"
+    }
+  },
   "schemaVersion": "3.0.23",
-  "updatedAt": "2020-02-10T19:28:30.038Z",
+  "updatedAt": "2020-02-11T05:07:42.648Z",
+  "networkType": "ethereum",
   "devdoc": {
     "methods": {}
   },
