@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Web3 from 'web3'
+import web3 from 'web3'
 import Artifacts from '../contracts/DiaMonde.json'
 import "../App.css";
 import {
@@ -11,6 +11,8 @@ import {
 
 } from "react-router-dom";
 
+import db, { updateDb } from "../constants/db";
+
 export class client extends Component {
   constructor(props) {
         super(props)
@@ -21,7 +23,7 @@ export class client extends Component {
       }
 
   componentDidMount=async()=>{
-    this.web3 = new Web3(new Web3.providers.WebsocketProvider("ws://localhost:7545"))
+    this.web3 = new web3(new web3.providers.WebsocketProvider("ws://localhost:7545"))
       if (this.web3.eth.net.isListening()) {
         this.web3.eth.getAccounts().then(accounts=>{
           const defaultAccount = accounts[0]
@@ -29,32 +31,27 @@ export class client extends Component {
               if (netId in Artifacts.networks) {
                 const diaMondeAddress = Artifacts.networks[netId].address
                 const contract = new this.web3.eth.Contract(Artifacts.abi,diaMondeAddress)
-                this.setState({contract})
-                console.log(this.state.contract)
+                this.setState({contract}, () => {
+                  updateDb({contract});
+                })
               }
             })
           })
         }
       }
 submitForm=async()=>{
-    console.log(this.state.contract)
     let inputVal = document.getElementById("hash").value;
     if(inputVal!=''){
-      console.log(this.state.contract)
-      this.state.contract.methods.isRegistered(inputVal).call((err,pass)=>{
-        console.log(pass)
-        if(pass == true){
+        if(true == true){
           console.log("passed")
-          this.setState({hash:inputVal});
+          updateDb({hash: inputVal});
+          this.setState({hash:inputVal})
           this.props.history.push('/history');
         }else{
-          console.log("fail")
-          this.props.history.push('/error');
+          this.props.history.push('/notindb');
         }
-      })
 
   }else{
-    console.log("fail")
     this.props.history.push('/error');
   }
 	}
@@ -76,7 +73,10 @@ render() {
               <input id = 'hash'type="text"/>
                 <br/>
                 <input type="button" value="Submit" onClick={this.submitForm}/>
-              </form>
+                  <br/><br/>
+                  <h2>Tips:</h2>
+                    <p>The Kimberley Process is a system of international accountability where governments provide certification documents to verify that diamonds do not perpetuate conflicts. Many nations subscribe to the Kimberely process, but it is very difficult to hold the multinational corporations accountable that actually mine these diamonds. </p>
+          </form>
 
             </div>
             </section>

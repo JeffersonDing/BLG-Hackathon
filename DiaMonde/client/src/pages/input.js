@@ -12,13 +12,13 @@ import {
 } from "react-router-dom";
 
 export class input extends Component {
+  constructor(props) {
+        super(props)
+        this.state = {
+        dropdown:'',
 
-  state = {
-    storageValue: 0,
-    web3: null,
-    accounts: null,
-    contract: null
-  };
+        }
+      }
 
   componentDidMount=async()=>{
       const web3 = await getWeb3();
@@ -26,6 +26,36 @@ export class input extends Component {
       const networkId = await web3.eth.net.getId();
       const deployedNetwork = DiaMonde.networks[networkId];
       const instance = new web3.eth.Contract(DiaMonde.abi,deployedNetwork);
+}
+
+handleOnChange(event){
+  this.setState({dropdown:event.currentTarget.value},()=>{
+    console.log(this.state.dropdown)
+
+  })
+
+}
+submitForm=async()=>{
+  switch (this.state.dropdown) {
+    case '1':
+      this.props.history.push('/mine');
+      break;
+    case '2':
+    this.props.history.push('/sort');
+    break;
+    case '3':
+    this.props.history.push('/cut');
+    break;
+    case '4':
+    this.props.history.push('/manufacture');
+    break;
+    case '5':
+    this.props.history.push('/cer');
+    break;
+    default:
+    break;
+
+  }
 }
 render() {
     return (
@@ -43,18 +73,16 @@ render() {
 
                       <form method="post" action="thanks.html">
                         <div class="row uniform">
-                          <div class="6u 12u$(xsmall)">
-                            <input type="text" name="name" id="name" value="" placeholder="Name" />
-                          </div><br/>
+                        <br/>
                           <div class="12u$">
                             <div class="select-wrapper">
-                              <select name="position" id="position">
-                                <option value="">- Position -</option>
+                              <select name="position" id="position" onChange={this.handleOnChange.bind(this)}>
+                                <option value="0">- Position -</option>
                                 <option value="1">Excavation</option>
-                                <option value="1">Sorting</option>
-                                <option value="1">Cutting/Polishing</option>
-                                <option value="1">Transportation</option>
-                                <option value="1">Retail</option>
+                                <option value="2">Sorting</option>
+                                <option value="3">Cutting/Polishing</option>
+                                <option value="4">Manufacture</option>
+                                <option value="5">Certification</option>
                               </select>
                             </div>
                           </div>
@@ -66,20 +94,15 @@ render() {
                             <input type="radio" id="Unverified" name="verification"/>
                             <label for="Unverified">Unverified</label>
                           </div>
-                          <div class="6u 12u$(small)">
-                            <input type="checkbox" id="copy" name="copy"/>
-                            <label for="copy">Email me a copy of this message</label>
-                          </div>
+
                           <div class="6u$ 12u$(small)">
                             <input type="checkbox" id="human" name="human" checked/>
                             <label for="human">I am a human and not a robot</label>
                           </div>
-                          <div class="12u$">
-                            <textarea name="message" id="message" placeholder="Enter additional info" rows="6"></textarea>
-                          </div>
+
                           <div class="12u$">
                             <ul class="actions">
-                              <li><input type="button" value="Submit"/></li>
+                              <li><input type="button" value="Submit" onClick={this.submitForm}/></li>
                               <li><input type="reset" value="Reset" class="alt" /></li>
                             </ul>
                           </div>

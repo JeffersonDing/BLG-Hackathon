@@ -19,7 +19,7 @@ import sort from './pages/sort.js'
 import manufacture from './pages/manufacture.js'
 import cer from './pages/cer.js'
 import contractors from './pages/contractors.js'
-
+import notindb from './pages/notindb.js'
 class App extends Component {
 render() {
     return (
@@ -37,6 +37,7 @@ render() {
               <Route exact path = '/manufacture' component={manufacture} />
               <Route exact path = '/cer' component={cer} />
               <Route exact path = '/contractors' component={contractors} />
+              <Route exact path = '/notindb' component={notindb} />
             </Switch>
           </Router>
         </div>

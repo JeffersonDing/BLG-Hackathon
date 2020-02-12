@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import DiaMonde from "../contracts/DiaMonde.json";
-import getWeb3 from "../getWeb3";
+import Artifacts from "../contracts/DiaMonde.json";
+import web3 from 'web3'
 import "../App.css";
 import {
   BrowserRouter as Router,
@@ -10,27 +10,33 @@ import {
   withRouter,
 
 } from "react-router-dom";
-
+import db,{updateDb} from '../constants/db.js'
 export class mine extends Component {
 
   state = {
-    hash:"",
+    contract:null,
+    hash:'',
 
   };
 
-  componentDidMount=async()=>{
-      const web3 = await getWeb3();
-      const accounts = await web3.eth.getAccounts();
-      const networkId = await web3.eth.net.getId();
-      const deployedNetwork = DiaMonde.networks[networkId];
-      const instance = new web3.eth.Contract(DiaMonde.abi,deployedNetwork);
-}
-submitForm (e) {
-    let inputVal = document.getElementById("hash").value;
-    alert(inputVal);
-		e.preventDefault()
-    if(inputVal!=''){
-		this.props.history.push('/history');
+  componentDidMount(){
+    console.log(db.data.contract);
+  this.setState({contract:db.data.contract},()=>{
+    console.log(this.state.contract)
+
+    })
+  }
+submitForm () {
+    let _date = document.getElementById("date").value;
+    let _weight=document.getElementById("weight").value;
+    let _loc=document.getElementById("loc").value;
+    if(_date!=''||_weight!=''||_loc!=''){
+      this.state.contract.methods.mine(_date,_loc,_weight).send({from:'0x7C2C6d9F404bb083a154cc7Da19974668153c85f'},(err,res)=>{
+
+          this.props.history.push('/thankyou')
+      })
+
+
   }else{
     this.props.history.push('/error')
   }
@@ -51,16 +57,16 @@ render() {
 						<div class="content">
 							<form action ={this.submitForm.bind(this)}>
                               Mine Date:<br/>
-                              <input type="text" name="date" ></input>
+                            <input id="date" type="text" name="date" ></input>
                               <br/><br/>
 
                               Mine Location:<br/>
-                              <input type="text" name="loc" ></input>
+                            <input id="loc" type="text" name="loc" ></input>
                               <br/><br/>
                               Raw Weight:<br/>
-                              <input type="text" name="weight" ></input>
+                            <input id="weight" type="text" name="weight" ></input>
                               <br/><br/>
-                              <input type="submit" value="Submit"></input>
+                              <input type="button" value="Submit" onClick={this.submitForm.bind(this)}></input>
                             </form>
 						</div>
 					</section>

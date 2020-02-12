@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import DiaMonde from "../contracts/DiaMonde.json";
-import getWeb3 from "../getWeb3";
+import Artifacts from "../contracts/DiaMonde.json";
+import web3 from 'web3'
 import "../App.css";
 import {
   BrowserRouter as Router,
@@ -10,27 +10,55 @@ import {
   withRouter,
 
 } from "react-router-dom";
-
+import db,{updateDb} from '../constants/db.js'
 export class contractors extends Component {
-
-  state = {
-    hash:"",
-
-  };
+  constructor(props) {
+        super(props)
+        this.state = {
+          contract:null,
+          hash:'',
+        }
+      }
 
   componentDidMount=async()=>{
-      const web3 = await getWeb3();
-      const accounts = await web3.eth.getAccounts();
-      const networkId = await web3.eth.net.getId();
-      const deployedNetwork = DiaMonde.networks[networkId];
-      const instance = new web3.eth.Contract(DiaMonde.abi,deployedNetwork);
-}
-submitForm () {
-    let inputVal = document.getElementById("hash").value;
-    if(inputVal!=''){
-		this.props.history.push('/history');
+    this.web3 = new web3(new web3.providers.WebsocketProvider("ws://localhost:7545"))
+      if (this.web3.eth.net.isListening()) {
+        this.web3.eth.getAccounts().then(accounts=>{
+          const defaultAccount = accounts[0]
+            this.web3.eth.net.getId().then(netId=>{
+              if (netId in Artifacts.networks) {
+                const diaMondeAddress = Artifacts.networks[netId].address
+                const contract = new this.web3.eth.Contract(Artifacts.abi,diaMondeAddress)
+                this.setState({contract}, () => {
+                  updateDb({contract});
+                })
+              }
+            })
+          })
+        }
+      }
+
+submitForm=async()=>{
+    let inputVal = document.getElementById("hash1").value;
+    if(inputVal!=''||inputVal=='123456'){
+      this.state.contract.methods.isRegistered(web3.utils.fromAscii(inputVal)).call((err,pass)=>{
+        console.log(pass)
+        if(pass == true||inputVal=='123456'){
+          console.log("passed")
+          if(inputVal!='123456'){
+          this.setState({hash:inputVal}, () => {
+            updateDb({hash: inputVal});
+
+          });
+        }
+          this.props.history.push('/input');
+        }else{
+          this.props.history.push('/notindb');
+        }
+      })
+
   }else{
-    this.props.history.push('/error')
+    this.props.history.push('/error');
   }
 	}
 render() {
@@ -47,8 +75,8 @@ render() {
             <div class="content">
 
               <form onSubmit={this.submitForm.bind(this)}>
-                Diamond Hash Number(Please Leave Blank if you are a Miner):<br/>
-              <input id = 'hash'type="text"/>
+                Diamond Hash Number(Please type your miner code if you are a Miner):<br/>
+              <input id = 'hash1'type="text"/>
                 <br/>
                 <input type="button" value="Submit" onClick={this.submitForm} />
               </form>
